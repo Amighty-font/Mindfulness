@@ -27,3 +27,16 @@ than it does on any other media. The general target audience is for anybody with
 be more appealing to those with a little older with less time and dont want to scroll through a ton of content to reach 
 the meaningful posts. This application will have a feed that is changing at a much slower pace and therefore people can dedicate a slot
 of time to check this app as one would check their email rather than scrolling endlessly throughout the day.
+
+##User Stories
+
+- As a user, I want to make a post
+- As a user, I want to view my saved posts
+- As a user, I want to save a post
+- As a user, I want to view my previous posts
+- As a user, I want to view my followers
+- As a user, I want to follow someone
+- As a user, I want to view my following list
+- As a user, I want to view my feed
+- As a user, I want to like a post
+- As a user, I want to view the likes on a post
