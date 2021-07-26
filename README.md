@@ -31,12 +31,8 @@ of time to check this app as one would check their email rather than scrolling e
 ##User Stories
 
 - As a user, I want to make a post
-- As a user, I want to view my saved posts
-- As a user, I want to save a post
 - As a user, I want to view my previous posts
 - As a user, I want to view my followers
 - As a user, I want to follow someone
 - As a user, I want to view my following list
 - As a user, I want to view my feed
-- As a user, I want to like a post
-- As a user, I want to view the likes on a post

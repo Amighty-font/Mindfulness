@@ -16,6 +16,11 @@ public class Account {
         followers = new ArrayList();
         myPosts = new ArrayList();
         saved = new ArrayList();
+
+    }
+
+    public String getName() {
+        return id;
     }
 
     public ArrayList<Posts> getPosts() {
@@ -29,6 +34,10 @@ public class Account {
     public void follow(Account account) {
         following.add(account);
         account.followers.add(this);
+    }
+
+    public void unfollow(Account account) {
+        following.remove(account);
     }
 
     public ArrayList<Account> getFollowers() {
@@ -53,6 +62,24 @@ public class Account {
 
         quickSortByTime(fullFeed);
         return fullFeed;
+    }
+
+    public Account findFollowingUser(String name) {
+        for (Account acc : following) {
+            if (acc.getName() == name) {
+                return acc;
+            }
+        }
+        return null;
+    }
+
+    public Account findFollowerUser(String name) {
+        for (Account acc : followers) {
+            if (acc.getName() == name) {
+                return acc;
+            }
+        }
+        return null;
     }
 
     private static void quickSortByTime(ArrayList<Posts> posts) {
