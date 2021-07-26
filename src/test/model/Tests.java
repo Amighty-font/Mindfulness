@@ -96,6 +96,7 @@ class AccountTest {
     }
     @Test
     public void testAddAllAccount() {
+        assertTrue(aa.getAllAccounts().isEmpty());
         aa.addAccount(testAccount1);
         ArrayList<Account> testList1 = new ArrayList();
         testList1.add(testAccount1);
