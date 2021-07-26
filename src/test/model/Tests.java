@@ -110,4 +110,8 @@ class AccountTest {
         assertEquals(aa.findByName("one"), testAccount1);
         assertEquals(aa.findByName("bobby"), null);
     }
+    @Test
+    public void testCaption() {
+        assertEquals(testPost1.getCaption(), "post one");
+    }
 }
