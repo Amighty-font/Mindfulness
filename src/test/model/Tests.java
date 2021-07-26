@@ -108,5 +108,6 @@ class AccountTest {
         assertTrue(aa.allAccounts.isEmpty());
         aa.addAccount(testAccount1);
         assertEquals(aa.findByName("one"), testAccount1);
+        assertEquals(aa.findByName("bobby"), null);
     }
 }
