@@ -137,7 +137,7 @@ public class MindfulApp {
     private void followingOptions() {
         System.out.println("How would you like to interact with them?");
         System.out.println("u -> unfollow");
-        System.out.println("s -> see their posts");
+        System.out.println("s -> see posts");
     }
 
     private void follow() {
