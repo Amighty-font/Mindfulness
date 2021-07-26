@@ -10,8 +10,6 @@ import java.util.Scanner;
 public class MindfulApp {
     private Account user;
     AllAccounts allAccounts = new AllAccounts();
-    private Account influencer1;
-    private Account influencer2;
     private Scanner input;
 
     public MindfulApp() {
@@ -82,14 +80,14 @@ public class MindfulApp {
         if (yn.equals("y")) {
             System.out.println("Who would you like to interact with?");
             String findName = actualNextLine();
-            for (Account acc : user.getFollowers()) {
-                if (acc.getName() == findName) {
-                    acc.getPosts();
-                } else {
-                    System.out.println("Couldn't find user");
-                }
+            Account userFound = user.findFollowerUser(findName);
+            if (userFound != null) {
+                printPosts(userFound.getPosts());
+            } else {
+                System.out.println("Couldn't find user");
             }
         }
+        noInput(yn);
     }
 
     private String actualNextLine() {
@@ -109,31 +107,46 @@ public class MindfulApp {
         if (yn.equals("y")) {
             System.out.println("Who do you want to interact with?");
             String findName = actualNextLine();
-            Account userFound = user.findFollowerUser(findName);
-            if (userFound != null) {
-                System.out.println("How would you like to interact with them?");
-                System.out.println("u -> unfollow");
-                System.out.println("s -> see their posts");
+            if (user.findFollowerUser(findName) != null) {
+                followingOptions();
                 String action = actualNextLine();
-
                 if (action.equals("u")) {
-                    user.unfollow(userFound);
+                    user.unfollow(user.findFollowerUser(findName));
                 } else if (action.equals("s")) {
-                    printPosts(userFound.getPosts());
+                    printPosts(user.findFollowerUser(findName).getPosts());
                 }
             } else {
                 System.out.println("Couldn't find user");
             }
         }
+        noInput(yn);
+    }
+
+    private void noInput(String inp) {
+        if (!inp.equals("n")) {
+            System.out.println("not a valid input");
+        }
+        displayMenu();
+    }
+
+    private void followingOptions() {
+        System.out.println("How would you like to interact with them?");
+        System.out.println("u -> unfollow");
+        System.out.println("s -> see their posts");
     }
 
     private void follow() {
         System.out.println("Who would you like to follow");
         String findUser = actualNextLine();
-        Account userFound = allAccounts.findByName(findUser);
-        user.follow(userFound);
-        System.out.println("Followed " + userFound.getName());
-
+        if (findUser != null) {
+            Account userFound = allAccounts.findByName(findUser);
+            user.follow(userFound);
+            System.out.println("Followed " + userFound.getName());
+            displayMenu();
+        } else {
+            System.out.println("Couldn't find user");
+            displayMenu();
+        }
     }
 
     private void makePost() {
@@ -142,10 +155,12 @@ public class MindfulApp {
         Posts post = new Posts(cap);
         user.makePost(post);
         System.out.println("posted with caption " + post.getCaption() + " at time: " + post.getPostTime());
+        displayMenu();
     }
 
     private void viewPreviousPosts() {
         printPosts(user.getPosts());
+        displayMenu();
     }
 
     private void printPosts(ArrayList<Posts> post) {
@@ -159,8 +174,8 @@ public class MindfulApp {
     }
 
     private void init() {
-        influencer1 = new Account("Joe");
-        influencer2 = new Account("Bob");
+        Account influencer1 = new Account("Joe");
+        Account influencer2 = new Account("Bob");
         Posts post1 = new Posts("I am eating");
         Posts post2 = new Posts("I am sitting");
         Posts post3 = new Posts("I love food");

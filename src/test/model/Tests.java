@@ -73,4 +73,13 @@ class AccountTest {
         testList1.add(testPost3);
         assertEquals(testAccount3.viewFeed(), testList1);
     }
+
+    @Test
+    public void testFindUser() {
+        testAccount1.follow(testAccount2);
+        assertEquals(testAccount1.findFollowingUser("bobby"), null);
+        assertEquals(testAccount2.findFollowerUser("bobby"), null);
+        assertEquals(testAccount1.findFollowingUser("two"), testAccount2);
+        assertEquals(testAccount2.findFollowerUser("one"), testAccount1);
+    }
 }

@@ -2,7 +2,7 @@ package model;
 
 public class Posts {
     private Long postTime;
-    private String caption;
+    private final String caption;
 
     public Posts(String post) {
         postTime = System.currentTimeMillis();
