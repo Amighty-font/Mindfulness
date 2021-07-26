@@ -11,6 +11,7 @@ class AccountTest {
     Account testAccount1;
     Account testAccount2;
     Account testAccount3;
+    AllAccounts aa = new AllAccounts();
     Posts testPost1;
     Posts testPost2;
     Posts testPost3;
@@ -81,5 +82,30 @@ class AccountTest {
         assertEquals(testAccount2.findFollowerUser("bobby"), null);
         assertEquals(testAccount1.findFollowingUser("two"), testAccount2);
         assertEquals(testAccount2.findFollowerUser("one"), testAccount1);
+    }
+
+    @Test
+    public void testUnfollow() {
+        testAccount1.follow(testAccount2);
+        testAccount1.unfollow(testAccount2);
+        assertTrue(testAccount1.getFollowing().isEmpty());
+        testAccount1.follow(testAccount3);
+        ArrayList<Account> testList1 = new ArrayList();
+        testList1.add(testAccount3);
+        assertEquals(testAccount1.getFollowing(), testList1);
+    }
+    @Test
+    public void testAddAllAccount() {
+        aa.addAccount(testAccount1);
+        ArrayList<Account> testList1 = new ArrayList();
+        testList1.add(testAccount1);
+        assertEquals(aa.getAllAccounts(), testList1);
+    }
+
+    @Test
+    public void testFindByName() {
+        assertTrue(aa.allAccounts.isEmpty());
+        aa.addAccount(testAccount1);
+        assertEquals(aa.findByName("one"), testAccount1);
     }
 }

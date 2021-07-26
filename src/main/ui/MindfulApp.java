@@ -103,6 +103,10 @@ public class MindfulApp {
             System.out.println(acc.getName());
         }
         System.out.println("Would you like to interact with anyone? (y/n)");
+        interactWithFollowing();
+    }
+
+    private void interactWithFollowing() {
         String yn = actualNextLine();
         if (yn.equals("y")) {
             System.out.println("Who do you want to interact with?");
@@ -118,8 +122,9 @@ public class MindfulApp {
             } else {
                 System.out.println("Couldn't find user");
             }
+        } else {
+            noInput(yn);
         }
-        noInput(yn);
     }
 
     private void noInput(String inp) {

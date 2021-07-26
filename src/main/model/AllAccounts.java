@@ -24,4 +24,8 @@ public class AllAccounts {
     public void addAccount(Account acc) {
         allAccounts.add(acc);
     }
+
+    public ArrayList<Account> getAllAccounts() {
+        return allAccounts;
+    }
 }
