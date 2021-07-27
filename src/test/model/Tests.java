@@ -76,6 +76,11 @@ class AccountTest {
     }
 
     @Test
+    public void testGetEmptyPost() {
+        assertEquals(testAccount1.getLastPost(), null);
+    }
+
+    @Test
     public void testFindUser() {
         testAccount1.follow(testAccount2);
         assertEquals(testAccount1.findFollowingUser("bobby"), null);

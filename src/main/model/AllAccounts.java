@@ -25,6 +25,7 @@ public class AllAccounts {
         allAccounts.add(acc);
     }
 
+    //EFFECTS: returns arraylist of all accounts
     public ArrayList<Account> getAllAccounts() {
         return allAccounts;
     }

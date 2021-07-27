@@ -7,15 +7,19 @@ import model.Posts;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//EFFECTS: Mindful application
 public class MindfulApp {
     private Account user;
     AllAccounts allAccounts = new AllAccounts();
     private Scanner input;
 
+    //EFFECTS: runs MindfulApp
     public MindfulApp() {
         runMindfulApp();
     }
 
+    //MODIFIES: this
+    //EFFECTS: processes user inputs
     private void runMindfulApp() {
         boolean keepGoing = true;
         String command = null;
@@ -36,6 +40,8 @@ public class MindfulApp {
         System.out.println("\nGoodbye!");
     }
 
+    //MODIFIES: this
+    //EFFECTS: gets user input for name and creates user account
     private void makeUser() {
         System.out.println("Input desired username");
         String name = input.nextLine();
@@ -44,6 +50,7 @@ public class MindfulApp {
         allAccounts.addAccount(user);
     }
 
+    //EFFECTS: shows the menu
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\tfe -> view followers");
@@ -55,6 +62,7 @@ public class MindfulApp {
         System.out.println("\tq -> quit");
     }
 
+    //EFFECTS: takes input and processes commands
     private void processCommand(String command) {
         if (command.equals("fe")) {
             getFollowers();
@@ -71,6 +79,7 @@ public class MindfulApp {
         }
     }
 
+    //EFFECTS: prints followers, asks for interaction and returns given users posts
     private void getFollowers() {
         for (Account acc : user.getFollowers()) {
             System.out.println(acc.getName());
@@ -78,7 +87,7 @@ public class MindfulApp {
         System.out.println("Would you like to interact with anyone? (y/n)");
         String yn = actualNextLine();
         if (yn.equals("y")) {
-            System.out.println("Who would you like to interact with?");
+            System.out.println("Whos posts would you like to see?");
             String findName = actualNextLine();
             Account userFound = user.findFollowerUser(findName);
             if (userFound != null) {
@@ -98,6 +107,7 @@ public class MindfulApp {
         return s;
     }
 
+    //EFFECTS: prints all followers names and calls interaction method
     private void getFollowing() {
         for (Account acc : user.getFollowing()) {
             System.out.println(acc.getName());
@@ -106,27 +116,32 @@ public class MindfulApp {
         interactWithFollowing();
     }
 
+    //MODIFIES: user.following
+    //EFFECTS asks for interaction, unfollows, or prints posts based on input
     private void interactWithFollowing() {
         String yn = actualNextLine();
         if (yn.equals("y")) {
             System.out.println("Who do you want to interact with?");
             String findName = actualNextLine();
-            if (user.findFollowerUser(findName) != null) {
+            Account foundUser = user.findFollowingUser(findName);
+            if (!(foundUser == null)) {
                 followingOptions();
                 String action = actualNextLine();
                 if (action.equals("u")) {
-                    user.unfollow(user.findFollowerUser(findName));
+                    user.unfollow(foundUser);
                 } else if (action.equals("s")) {
-                    printPosts(user.findFollowerUser(findName).getPosts());
+                    printPosts(foundUser.getPosts());
                 }
             } else {
                 System.out.println("Couldn't find user");
+                displayMenu();
             }
         } else {
             noInput(yn);
         }
     }
 
+    //EFFECTS: prints the return for a "n" input
     private void noInput(String inp) {
         if (!inp.equals("n")) {
             System.out.println("not a valid input");
@@ -134,26 +149,30 @@ public class MindfulApp {
         displayMenu();
     }
 
+    //EFFECTS: prints following input menu
     private void followingOptions() {
         System.out.println("How would you like to interact with them?");
         System.out.println("u -> unfollow");
         System.out.println("s -> see posts");
     }
 
+    //MODIFIES: user.following
+    //EFFECTS: finds user with input name and adds to follow list, else does nothing
     private void follow() {
         System.out.println("Who would you like to follow");
         String findUser = actualNextLine();
-        if (findUser != null) {
-            Account userFound = allAccounts.findByName(findUser);
+        Account userFound = allAccounts.findByName(findUser);
+        if (!(userFound == null)) {
             user.follow(userFound);
             System.out.println("Followed " + userFound.getName());
-            displayMenu();
         } else {
             System.out.println("Couldn't find user");
-            displayMenu();
         }
+        displayMenu();
     }
 
+    //MODIFIES: user.myPosts
+    //EFFECTS: makes post with given string as caption and posts to user
     private void makePost() {
         System.out.println("What caption would you like to post?");
         String cap = actualNextLine();
@@ -163,21 +182,25 @@ public class MindfulApp {
         displayMenu();
     }
 
+    //EFFECTS: prints previous posts
     private void viewPreviousPosts() {
         printPosts(user.getPosts());
         displayMenu();
     }
 
+    //EFFECTS: goes through given arraylist and prints posts
     private void printPosts(ArrayList<Posts> post) {
         for (Posts p : post) {
             System.out.println(p.getCaption());
         }
     }
 
+    //EFFECTS: calls printpost on users feed
     private void viewFeed() {
         printPosts(user.viewFeed());
     }
 
+    //EFFECTS: initializes bot accounts and creates input var
     private void init() {
         Account influencer1 = new Account("Joe");
         Account influencer2 = new Account("Bob");

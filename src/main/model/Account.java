@@ -10,48 +10,64 @@ public class Account {
     private ArrayList<Posts> saved;
     private String id;
 
+    //EFFECTS: creates account with name as the given string, following, followers, posts and saved list
     public Account(String name) {
         id = name;
         following = new ArrayList();
         followers = new ArrayList();
         myPosts = new ArrayList();
         saved = new ArrayList();
-
     }
 
+    //EFFECT: return name of account
     public String getName() {
         return id;
     }
 
+    //EFFECT: return posts a user has made
     public ArrayList<Posts> getPosts() {
         return myPosts;
     }
 
+    //EFFECTS: takes a post and adds it to the myPosts of an account
+    //MODIFIES: this
     public void makePost(Posts post) {
         myPosts.add(post);
     }
 
+    //EFFECT: adds an account to following
+    //MODIFIES: this
     public void follow(Account account) {
         following.add(account);
         account.followers.add(this);
     }
 
+    //EFFECT: removes an account from following
+    //MODIFIES: this
     public void unfollow(Account account) {
         following.remove(account);
     }
 
+    //EFFECT: returns followers list
     public ArrayList<Account> getFollowers() {
         return followers;
     }
 
+    //EFFECT: return following list
     public ArrayList<Account> getFollowing() {
         return following;
     }
 
+    //EFFECT: returns the most recent post
     public Posts getLastPost() {
-        return myPosts.get(myPosts.size() - 1);
+        if (!myPosts.isEmpty()) {
+            return myPosts.get(myPosts.size() - 1);
+        } else {
+            return null;
+        }
     }
 
+    //EFFECT: return a sorted list of posts based on time
     public ArrayList<Posts> viewFeed() {
         ArrayList<Posts> fullFeed = new ArrayList();
         for (Account a : following) {
@@ -64,28 +80,32 @@ public class Account {
         return fullFeed;
     }
 
+    //EFFECT: returns a user with same given string in following list, else returns null if not found
     public Account findFollowingUser(String name) {
         for (Account acc : following) {
-            if (acc.getName() == name) {
+            if (acc.getName().equals(name)) {
                 return acc;
             }
         }
         return null;
     }
 
+    //EFFECT: returns a user with same given string in followers list, else returns null if not found
     public Account findFollowerUser(String name) {
         for (Account acc : followers) {
-            if (acc.getName() == name) {
+            if (acc.getName().equals(name)) {
                 return acc;
             }
         }
         return null;
     }
 
+    //EFFECT: sorts given array of posts by post time
     private static void quickSortByTime(ArrayList<Posts> posts) {
         quickSortByTime(posts, 0, posts.size() - 1);
     }
 
+    //EFFECT: sorts left and right side of array until start>=end, ie. the list is sorted
     private static void quickSortByTime(ArrayList<Posts> posts, int start, int end) {
         if (start >= end) {  //base case of when it is fully partitioned
             return;
@@ -95,6 +115,7 @@ public class Account {
         quickSortByTime(posts, index + 1, end);   //sort right side of array
     }
 
+    //EFFECT: compares pivotValue and elements of the array from start to end and swaps if posttime < pivotIndex
     private static int partition(ArrayList<Posts> posts, int start, int end) {
         int pivotIndex = start;
         Long pivotValue = posts.get(end).getPostTime();
@@ -108,6 +129,7 @@ public class Account {
         return pivotIndex;
     }
 
+    //EFFECT swaps post at indexA with post at indexB
     private static void swapPosts(ArrayList<Posts> posts, int indexA, int indexB) {
         Posts temp = posts.get(indexA);
         posts.set(indexA, posts.get(indexB));
