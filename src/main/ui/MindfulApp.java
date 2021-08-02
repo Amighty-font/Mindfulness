@@ -75,23 +75,40 @@ public class MindfulApp {
 
     //EFFECTS: takes input and processes commands
     private void processCommand(String command) {
-        if (command.equals("fe")) {
-            getFollowers();
-        } else if (command.equals("fi")) {
-            getFollowing();
-        } else if (command.equals("v")) {
-            viewFeed();
-        } else if (command.equals("vpp")) {
-            viewPreviousPosts();
-        } else if (command.equals("mp")) {
-            makePost();
-        } else if (command.equals("fo")) {
-            follow();
-        } else if (command.equals("b")) {
-            saveAllAccounts();
-        } else if (command.equals("l")) {
-            loadAllAccounts();
+        switch (command) {
+            case "fe":
+                getFollowers();
+                break;
+            case "fi":
+                getFollowing();
+                break;
+            case "v":
+                viewFeed();
+                break;
+            case "vpp":
+                viewPreviousPosts();
+                break;
+            case "mp":
+                makePost();
+                break;
+            default:
+                processCommandTwo(command);
         }
+    }
+
+    private void processCommandTwo(String command) {
+        switch (command) {
+            case "fo":
+                follow();
+                break;
+            case "b":
+                saveAllAccounts();
+                break;
+            case "l":
+                loadAllAccounts();
+                break;
+        }
+
     }
 
     private void saveAllAccounts() {

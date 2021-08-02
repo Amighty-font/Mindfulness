@@ -1,0 +1,20 @@
+{"accounts": [
+    {
+        "followers": ["two"],
+        "following": [],
+        "name": "one",
+        "posts": []
+    },
+    {
+        "followers": [],
+        "following": ["one"],
+        "name": "two",
+        "posts": []
+    },
+    {
+        "followers": [],
+        "following": [],
+        "name": "three",
+        "posts": []
+    }
+]}

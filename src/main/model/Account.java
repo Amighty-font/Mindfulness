@@ -103,14 +103,6 @@ public class Account implements Writable {
         return null;
     }
 
-    public void setFollowers(ArrayList<Account> following) {
-        this.following = following;
-    }
-
-    public void setFollowing(ArrayList<Account> followers) {
-        this.followers = followers;
-    }
-
     //EFFECT: sorts given array of posts by post time
     private static void quickSortByTime(ArrayList<Post> posts) {
         quickSortByTime(posts, 0, posts.size() - 1);
