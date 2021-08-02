@@ -12,18 +12,18 @@ class AccountTest {
     Account testAccount2;
     Account testAccount3;
     AllAccounts aa = new AllAccounts();
-    Posts testPost1;
-    Posts testPost2;
-    Posts testPost3;
+    Post testPost1;
+    Post testPost2;
+    Post testPost3;
 
     @BeforeEach
     public void setUp() {
         testAccount1 = new Account("one");
         testAccount2 = new Account("two");
         testAccount3 = new Account("three");
-        testPost1 = new Posts("post one");
-        testPost2 = new Posts("post two");
-        testPost3 = new Posts("post three");
+        testPost1 = new Post("post one");
+        testPost2 = new Post("post two");
+        testPost3 = new Post("post three");
     }
 
     @Test
@@ -53,9 +53,6 @@ class AccountTest {
         testList2.add(testAccount1);
         testList2.add(testAccount3);
         assertEquals(testAccount2.getFollowing(), testList2);
-        System.out.println(testPost1.getPostTime());
-        System.out.println(testPost2.getPostTime());
-        System.out.println(testPost3.getPostTime());
     }
 
     @Test
@@ -68,7 +65,7 @@ class AccountTest {
         testAccount1.makePost(testPost1);
         testAccount1.makePost(testPost3);
         testAccount2.makePost(testPost2);
-        ArrayList<Posts> testList1 = new ArrayList();
+        ArrayList<Post> testList1 = new ArrayList();
         testList1.add(testPost1);
         testList1.add(testPost2);
         testList1.add(testPost3);

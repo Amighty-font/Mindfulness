@@ -2,16 +2,23 @@ package ui;
 
 import model.Account;
 import model.AllAccounts;
-import model.Posts;
+import model.Post;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 //EFFECTS: Mindful application
 public class MindfulApp {
     private Account user;
+    private static final String JSON_STORE = "./data/AllAccounts.json";
     AllAccounts allAccounts = new AllAccounts();
     private Scanner input;
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     //EFFECTS: runs MindfulApp
     public MindfulApp() {
@@ -21,6 +28,8 @@ public class MindfulApp {
     //MODIFIES: this
     //EFFECTS: processes user inputs
     private void runMindfulApp() {
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
         boolean keepGoing = true;
         String command = null;
 
@@ -59,6 +68,8 @@ public class MindfulApp {
         System.out.println("\tvpp -> view previous post");
         System.out.println("\tmp -> make post");
         System.out.println("\tfo -> follow");
+        System.out.println("\tb -> backup");
+        System.out.println("\tl -> load");
         System.out.println("\tq -> quit");
     }
 
@@ -76,6 +87,30 @@ public class MindfulApp {
             makePost();
         } else if (command.equals("fo")) {
             follow();
+        } else if (command.equals("b")) {
+            saveAllAccounts();
+        } else if (command.equals("l")) {
+            loadAllAccounts();
+        }
+    }
+
+    private void saveAllAccounts() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(allAccounts);
+            jsonWriter.close();
+            System.out.println("Backed up all accounts to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void loadAllAccounts() {
+        try {
+            allAccounts = jsonReader.read();
+            System.out.println("Loaded last backup from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
@@ -176,7 +211,7 @@ public class MindfulApp {
     private void makePost() {
         System.out.println("What caption would you like to post?");
         String cap = actualNextLine();
-        Posts post = new Posts(cap);
+        Post post = new Post(cap);
         user.makePost(post);
         System.out.println("posted with caption " + post.getCaption() + " at time: " + post.getPostTime());
         displayMenu();
@@ -189,8 +224,8 @@ public class MindfulApp {
     }
 
     //EFFECTS: goes through given arraylist and prints posts
-    private void printPosts(ArrayList<Posts> post) {
-        for (Posts p : post) {
+    private void printPosts(ArrayList<Post> post) {
+        for (Post p : post) {
             System.out.println(p.getCaption());
         }
     }
@@ -204,9 +239,9 @@ public class MindfulApp {
     private void init() {
         Account influencer1 = new Account("Joe");
         Account influencer2 = new Account("Bob");
-        Posts post1 = new Posts("I am eating");
-        Posts post2 = new Posts("I am sitting");
-        Posts post3 = new Posts("I love food");
+        Post post1 = new Post("I am eating");
+        Post post2 = new Post("I am sitting");
+        Post post3 = new Post("I love food");
         influencer1.makePost(post1);
         influencer1.makePost(post2);
         influencer2.makePost(post3);

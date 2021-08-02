@@ -1,13 +1,16 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
-public class Account {
+import java.util.ArrayList;
+
+public class Account implements Writable {
     private ArrayList<Account> following;
     private ArrayList<Account> followers;
-    private ArrayList<Posts> myPosts;
-    private ArrayList<Posts> saved;
+    private ArrayList<Post> myPosts;
+    private ArrayList<Post> saved;
     private String id;
 
     //EFFECTS: creates account with name as the given string, following, followers, posts and saved list
@@ -25,13 +28,13 @@ public class Account {
     }
 
     //EFFECT: return posts a user has made
-    public ArrayList<Posts> getPosts() {
+    public ArrayList<Post> getPosts() {
         return myPosts;
     }
 
     //EFFECTS: takes a post and adds it to the myPosts of an account
     //MODIFIES: this
-    public void makePost(Posts post) {
+    public void makePost(Post post) {
         myPosts.add(post);
     }
 
@@ -59,7 +62,7 @@ public class Account {
     }
 
     //EFFECT: returns the most recent post
-    public Posts getLastPost() {
+    public Post getLastPost() {
         if (!myPosts.isEmpty()) {
             return myPosts.get(myPosts.size() - 1);
         } else {
@@ -68,10 +71,10 @@ public class Account {
     }
 
     //EFFECT: return a sorted list of posts based on time
-    public ArrayList<Posts> viewFeed() {
-        ArrayList<Posts> fullFeed = new ArrayList();
+    public ArrayList<Post> viewFeed() {
+        ArrayList<Post> fullFeed = new ArrayList();
         for (Account a : following) {
-            for (Posts p : a.getPosts()) {
+            for (Post p : a.getPosts()) {
                 fullFeed.add(p);
             }
         }
@@ -100,13 +103,21 @@ public class Account {
         return null;
     }
 
+    public void setFollowers(ArrayList<Account> following) {
+        this.following = following;
+    }
+
+    public void setFollowing(ArrayList<Account> followers) {
+        this.followers = followers;
+    }
+
     //EFFECT: sorts given array of posts by post time
-    private static void quickSortByTime(ArrayList<Posts> posts) {
+    private static void quickSortByTime(ArrayList<Post> posts) {
         quickSortByTime(posts, 0, posts.size() - 1);
     }
 
     //EFFECT: sorts left and right side of array until start>=end, ie. the list is sorted
-    private static void quickSortByTime(ArrayList<Posts> posts, int start, int end) {
+    private static void quickSortByTime(ArrayList<Post> posts, int start, int end) {
         if (start >= end) {  //base case of when it is fully partitioned
             return;
         }
@@ -116,7 +127,7 @@ public class Account {
     }
 
     //EFFECT: compares pivotValue and elements of the array from start to end and swaps if posttime < pivotIndex
-    private static int partition(ArrayList<Posts> posts, int start, int end) {
+    private static int partition(ArrayList<Post> posts, int start, int end) {
         int pivotIndex = start;
         Long pivotValue = posts.get(end).getPostTime();
         for (int i = start; i < end; i++) {
@@ -130,9 +141,38 @@ public class Account {
     }
 
     //EFFECT swaps post at indexA with post at indexB
-    private static void swapPosts(ArrayList<Posts> posts, int indexA, int indexB) {
-        Posts temp = posts.get(indexA);
+    private static void swapPosts(ArrayList<Post> posts, int indexA, int indexB) {
+        Post temp = posts.get(indexA);
         posts.set(indexA, posts.get(indexB));
         posts.set(indexB, temp);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", id);
+        json.put("posts", myPostsToJson());
+        json.put("following", accountsToJson(following));
+        json.put("followers", accountsToJson(followers));
+        return json;
+    }
+
+    private JSONArray accountsToJson(ArrayList<Account> accounts) {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Account acc : accounts) {
+            jsonArray.put(acc.getName());
+        }
+        return jsonArray;
+    }
+
+    private JSONArray myPostsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Post p : myPosts) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
     }
 }

@@ -1,8 +1,12 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
-public class AllAccounts {
+public class AllAccounts implements Writable {
     ArrayList<Account> allAccounts;
 
     public AllAccounts() {
@@ -25,8 +29,31 @@ public class AllAccounts {
         allAccounts.add(acc);
     }
 
+    public void setAllAccounts(ArrayList<Account> newAccounts) {
+        allAccounts = newAccounts;
+    }
+
+
     //EFFECTS: returns arraylist of all accounts
     public ArrayList<Account> getAllAccounts() {
         return allAccounts;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("accounts", accountsToJson());
+
+        return json;
+    }
+
+    private JSONArray accountsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Account acc : allAccounts) {
+            jsonArray.put(acc.toJson());
+        }
+
+        return jsonArray;
+    }
+
 }

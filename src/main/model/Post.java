@@ -1,12 +1,15 @@
 package model;
 
-public class Posts {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Post implements Writable {
     private Long postTime;
     private final String caption;
 
     //EFFECTS: creates a post that tracks post time and sets caption to given string
     //MODIFIES: this
-    public Posts(String post) {
+    public Post(String post) {
         postTime = System.currentTimeMillis();
         caption = post;
     }
@@ -24,5 +27,13 @@ public class Posts {
     //EFFECT: returns caption of a post
     public String getCaption() {
         return caption;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("time", postTime);
+        json.put("caption", caption);
+        return json;
     }
 }
