@@ -74,6 +74,7 @@ public class JsonReader {
     private AllAccounts parseAllAccounts(JSONObject jsonObject) {
         AllAccounts allAccounts = new AllAccounts();
         addAccounts(allAccounts, jsonObject);
+        fillAccountDetail(jsonObject.getJSONArray("accounts"), allAccounts);
         return allAccounts;
     }
 

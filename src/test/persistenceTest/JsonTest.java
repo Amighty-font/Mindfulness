@@ -24,6 +24,8 @@ public class JsonTest {
         testPost1 = new Post("post one");
         testPost2 = new Post("post two");
         testPost3 = new Post("post three");
+        testAccount1.makePost(testPost1);
+        testAccount1.makePost(testPost1);
         testAccount2.follow(testAccount1);
         aa.addAccount(testAccount1);
         aa.addAccount(testAccount2);
@@ -31,11 +33,12 @@ public class JsonTest {
     }
 
     public void checkAllAccounts(AllAccounts testAA) {
+        assertEquals(testAA.getAllAccounts().size(), aa.getAllAccounts().size());
         for (Account acc: testAA.getAllAccounts()) {
             Account equalAcc = aa.findByName(acc.getName());
-            assertEquals(equalAcc.getFollowers(), acc.getFollowers());
-            assertEquals(equalAcc.getFollowing(), acc.getFollowing());
-            assertEquals(equalAcc.getPosts(), acc.getPosts());
+            assertEquals(equalAcc.getFollowers().size(), acc.getFollowers().size());
+            assertEquals(equalAcc.getFollowing().size(), acc.getFollowing().size());
+            assertEquals(equalAcc.getPosts().size(), acc.getPosts().size());
         }
     }
 }

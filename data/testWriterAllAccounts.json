@@ -1,1 +1,29 @@
-{"accounts": []}
+{"accounts": [
+    {
+        "followers": ["two"],
+        "following": [],
+        "name": "one",
+        "posts": [
+            {
+                "caption": "post one",
+                "time": 1627884065648
+            },
+            {
+                "caption": "post one",
+                "time": 1627884065648
+            }
+        ]
+    },
+    {
+        "followers": [],
+        "following": ["one"],
+        "name": "two",
+        "posts": []
+    },
+    {
+        "followers": [],
+        "following": [],
+        "name": "three",
+        "posts": []
+    }
+]}

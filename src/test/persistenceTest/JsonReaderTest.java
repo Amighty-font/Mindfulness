@@ -24,7 +24,7 @@ public class JsonReaderTest extends JsonTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            aa = reader.read();
+            AllAccounts testAA = reader.read();
             fail("IOException expected");
         } catch (IOException e) {
             // pass
@@ -35,21 +35,19 @@ public class JsonReaderTest extends JsonTest {
     void testReaderEmptyAllAccounts() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyAllAccounts.json");
         try {
-            aa = reader.read();
-            assertEquals(0, aa.getAllAccounts().size());
+            AllAccounts testAA = reader.read();
+            assertEquals(0, testAA.getAllAccounts().size());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
     }
 
     @Test
-    void testReaderGeneralAllAccounts() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralAllAccounts.json");
+    void testReaderAllAccounts() {
+        JsonReader reader = new JsonReader("./data/testReaderAllAccounts.json");
         try {
-            aa = reader.read();
-            List<Account> accounts = aa.getAllAccounts();
-            assertEquals(3, accounts.size());
-            checkAllAccounts(aa);
+            AllAccounts testAA = reader.read();
+            checkAllAccounts(testAA);
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

@@ -35,15 +35,15 @@ public class JsonWriterTest extends JsonTest{
     @Test
     void testWriterEmptyAllAccounts() {
         try {
-            aa = new AllAccounts();
+            AllAccounts testEmpty = new AllAccounts();
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyAllAccounts.json");
             writer.open();
-            writer.write(aa);
+            writer.write(testEmpty);
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyAllAccounts.json");
-            aa = reader.read();
-            assertEquals(0, aa.getAllAccounts().size());
+            AllAccounts testAA = reader.read();
+            assertEquals(0, testAA.getAllAccounts().size());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -52,36 +52,16 @@ public class JsonWriterTest extends JsonTest{
     @Test
     void testWriterAllAccounts() {
         try {
-            AllAccounts aa = new AllAccounts();
             JsonWriter writer = new JsonWriter("./data/testWriterAllAccounts.json");
             writer.open();
             writer.write(aa);
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterAllAccounts.json");
-            aa = reader.read();
-            assertEquals(aa.getAllAccounts().size(), 0);
+            AllAccounts testAA = reader.read();
+            checkAllAccounts(testAA);
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
     }
-
-    @Test
-    void testWriterGeneralWorkroom() {
-        try {
-            JsonWriter writer = new JsonWriter("./data/testWriterGeneralAllAccounts.json");
-            writer.open();
-            writer.write(aa);
-            writer.close();
-
-            JsonReader reader = new JsonReader("./data/testWriterGeneralAllAccounts.json");
-            aa = reader.read();
-            List<Account> accounts = aa.getAllAccounts();
-            assertEquals(3, accounts.size());
-
-        } catch (IOException e) {
-            fail("Exception should not have been thrown");
-        }
-    }
-
 }

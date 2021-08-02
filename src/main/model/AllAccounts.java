@@ -29,10 +29,6 @@ public class AllAccounts implements Writable {
         allAccounts.add(acc);
     }
 
-    public void setAllAccounts(ArrayList<Account> newAccounts) {
-        allAccounts = newAccounts;
-    }
-
 
     //EFFECTS: returns arraylist of all accounts
     public ArrayList<Account> getAllAccounts() {

@@ -3,7 +3,16 @@
         "followers": ["two"],
         "following": [],
         "name": "one",
-        "posts": []
+        "posts": [
+            {
+                "caption": "post one",
+                "time": 1627883212739
+            },
+            {
+                "caption": "post one",
+                "time": 1627883212739
+            }
+        ]
     },
     {
         "followers": [],
