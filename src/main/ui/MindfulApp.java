@@ -249,6 +249,9 @@ public class MindfulApp {
 
     //EFFECTS: calls printpost on users feed
     private void viewFeed() {
+        if (user.viewFeed().size() == 0) {
+            System.out.println("No posts in feed!");
+        }
         printPosts(user.viewFeed());
     }
 

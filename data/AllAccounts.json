@@ -1,16 +1,16 @@
 {"accounts": [
     {
-        "followers": ["Tim"],
+        "followers": [],
         "following": [],
         "name": "Joe",
         "posts": [
             {
                 "caption": "I am eating",
-                "time": 1627880401249
+                "time": 1627884261662
             },
             {
                 "caption": "I am sitting",
-                "time": 1627880401249
+                "time": 1627884261662
             }
         ]
     },
@@ -20,19 +20,22 @@
         "name": "Bob",
         "posts": [{
             "caption": "I love food",
-            "time": 1627880401249
+            "time": 1627884261662
         }]
     },
     {
         "followers": [],
-        "following": [
-            "Bob",
-            "Joe"
-        ],
+        "following": ["Bob"],
         "name": "Tim",
-        "posts": [{
-            "caption": "bobby",
-            "time": 1627880411830
-        }]
+        "posts": [
+            {
+                "caption": "heyo",
+                "time": 1627884275891
+            },
+            {
+                "caption": "heyyyyyoooo",
+                "time": 1627884282167
+            }
+        ]
     }
 ]}
