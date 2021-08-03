@@ -6,11 +6,11 @@
         "posts": [
             {
                 "caption": "I am eating",
-                "time": 1627884261662
+                "time": 1628022892288
             },
             {
                 "caption": "I am sitting",
-                "time": 1627884261662
+                "time": 1628022892288
             }
         ]
     },
@@ -20,22 +20,13 @@
         "name": "Bob",
         "posts": [{
             "caption": "I love food",
-            "time": 1627884261662
+            "time": 1628022892288
         }]
     },
     {
         "followers": [],
         "following": ["Bob"],
         "name": "Tim",
-        "posts": [
-            {
-                "caption": "heyo",
-                "time": 1627884275891
-            },
-            {
-                "caption": "heyyyyyoooo",
-                "time": 1627884282167
-            }
-        ]
+        "posts": []
     }
 ]}

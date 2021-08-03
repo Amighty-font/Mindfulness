@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//Citations :
-// - https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-
 
 //EFFECTS: Mindful application
 public class MindfulApp {
