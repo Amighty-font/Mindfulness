@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
+
+
 //EFFECTS: Mindful application
 public class MindfulApp {
     private Account user;
@@ -56,7 +58,7 @@ public class MindfulApp {
         System.out.println("Input desired username");
         String name = input.nextLine();
         System.out.println("Your username is " + name);
-        user = new Account(name);
+        user = new Account(name, "pass");
         allAccounts.addAccount(user);
     }
 
@@ -229,8 +231,7 @@ public class MindfulApp {
     private void makePost() {
         System.out.println("What caption would you like to post?");
         String cap = actualNextLine();
-        Post post = new Post(cap);
-        user.makePost(post);
+        Post post = new Post(cap, user);
         System.out.println("posted with caption " + post.getCaption() + " at time: " + post.getPostTime());
         displayMenu();
     }
@@ -258,11 +259,11 @@ public class MindfulApp {
 
     //EFFECTS: initializes bot accounts and creates input var
     private void init() {
-        Account influencer1 = new Account("Joe");
-        Account influencer2 = new Account("Bob");
-        Post post1 = new Post("I am eating");
-        Post post2 = new Post("I am sitting");
-        Post post3 = new Post("I love food");
+        Account influencer1 = new Account("Joe", "pass");
+        Account influencer2 = new Account("Bob", "pass");
+        Post post1 = new Post("I am eating", influencer1);
+        Post post2 = new Post("I am sitting", influencer1);
+        Post post3 = new Post("I love food", influencer2);
         influencer1.makePost(post1);
         influencer1.makePost(post2);
         influencer2.makePost(post3);

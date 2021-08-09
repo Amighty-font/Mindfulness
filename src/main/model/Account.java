@@ -11,15 +11,22 @@ public class Account implements Writable {
     private ArrayList<Account> followers;
     private ArrayList<Post> myPosts;
     private ArrayList<Post> saved;
+    private String password;
     private String id;
 
     //EFFECTS: creates account with name as the given string, following, followers, posts and saved list
-    public Account(String name) {
+    public Account(String name, String password) {
+        this.password = password;
         id = name;
         following = new ArrayList();
         followers = new ArrayList();
         myPosts = new ArrayList();
         saved = new ArrayList();
+
+    }
+
+    public Boolean checkPassword(String input) {
+        return password.equals(input);
     }
 
     //EFFECT: return name of account
@@ -49,6 +56,7 @@ public class Account implements Writable {
     //MODIFIES: this
     public void unfollow(Account account) {
         following.remove(account);
+        account.followers.remove(this);
     }
 
     //EFFECT: returns followers list
@@ -103,6 +111,10 @@ public class Account implements Writable {
         return null;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     //EFFECT: sorts given array of posts by post time
     private static void quickSortByTime(ArrayList<Post> posts) {
         quickSortByTime(posts, 0, posts.size() - 1);
@@ -143,6 +155,7 @@ public class Account implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", id);
+        json.put("password", password);
         json.put("posts", myPostsToJson());
         json.put("following", accountsToJson(following));
         json.put("followers", accountsToJson(followers));

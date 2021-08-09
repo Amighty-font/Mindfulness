@@ -18,12 +18,12 @@ class AccountTest {
 
     @BeforeEach
     public void setUp() {
-        testAccount1 = new Account("one");
-        testAccount2 = new Account("two");
-        testAccount3 = new Account("three");
-        testPost1 = new Post("post one");
-        testPost2 = new Post("post two");
-        testPost3 = new Post("post three");
+        testAccount1 = new Account("one", "pass");
+        testAccount2 = new Account("two","pass");
+        testAccount3 = new Account("three","pass");
+        testPost1 = new Post("post one", testAccount1);
+        testPost2 = new Post("post two", testAccount2);
+        testPost3 = new Post("post three", testAccount3);
     }
 
     @Test

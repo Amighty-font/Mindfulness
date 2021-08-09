@@ -18,14 +18,12 @@ public class JsonTest {
     Post testPost3;
 
     public void setUp() {
-        testAccount1 = new Account("one");
-        testAccount2 = new Account("two");
-        testAccount3 = new Account("three");
-        testPost1 = new Post("post one");
-        testPost2 = new Post("post two");
-        testPost3 = new Post("post three");
-        testAccount1.makePost(testPost1);
-        testAccount1.makePost(testPost1);
+        testAccount1 = new Account("one", "pass");
+        testAccount2 = new Account("two", "pass");
+        testAccount3 = new Account("three", "pass");
+        testPost1 = new Post("post one", testAccount1);
+        testPost2 = new Post("post two", testAccount1);
+        testPost3 = new Post("post three",testAccount2);
         testAccount2.follow(testAccount1);
         aa.addAccount(testAccount1);
         aa.addAccount(testAccount2);

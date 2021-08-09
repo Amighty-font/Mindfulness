@@ -67,7 +67,10 @@ public class JsonReader {
             JSONObject jsonPost = (JSONObject) id;
             Long postTime = jsonPost.getLong("time");
             String postCaption = jsonPost.getString("caption");
-            Post post = new Post(postCaption);
+            Account posts = aa.findByName(jsonPost.getString("postedBy"));
+            int likes = jsonPost.getInt("likes");
+            Post post = new Post(postCaption, posts);
+            post.setLikes(likes);
             post.setPostTime(postTime);
             acc.makePost(post);
         }
@@ -93,7 +96,8 @@ public class JsonReader {
     //EFFECTS: parses account from JSON object and adds them to allAccounts
     private void addAccount(AllAccounts aa, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
-        Account acc = new Account(name);
+        String pass = jsonObject.getString("password");
+        Account acc = new Account(name, pass);
         aa.addAccount(acc);
     }
 }
