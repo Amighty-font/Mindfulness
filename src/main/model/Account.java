@@ -10,7 +10,6 @@ public class Account implements Writable {
     private ArrayList<Account> following;
     private ArrayList<Account> followers;
     private ArrayList<Post> myPosts;
-    private ArrayList<Post> saved;
     private String password;
     private String id;
 
@@ -21,12 +20,6 @@ public class Account implements Writable {
         following = new ArrayList();
         followers = new ArrayList();
         myPosts = new ArrayList();
-        saved = new ArrayList();
-
-    }
-
-    public Boolean checkPassword(String input) {
-        return password.equals(input);
     }
 
     //EFFECT: return name of account
@@ -42,7 +35,9 @@ public class Account implements Writable {
     //EFFECTS: takes a post and adds it to the myPosts of an account
     //MODIFIES: this
     public void makePost(Post post) {
-        myPosts.add(post);
+        if (!myPosts.contains(post)) {
+            myPosts.add(post);
+        }
     }
 
     //EFFECT: adds an account to following

@@ -21,14 +21,12 @@ class AccountTest {
         testAccount1 = new Account("one", "pass");
         testAccount2 = new Account("two","pass");
         testAccount3 = new Account("three","pass");
-        testPost1 = new Post("post one", testAccount1);
-        testPost2 = new Post("post two", testAccount2);
-        testPost3 = new Post("post three", testAccount3);
     }
 
     @Test
     public void testMakePost() {
         testAccount1.makePost(testPost1);
+        System.out.println(testAccount1.getPosts().size());
         assertEquals(testAccount1.getLastPost(), testPost1);
     }
 
@@ -57,14 +55,14 @@ class AccountTest {
 
     @Test
     public void testFeed() {
+        testPost1 = new Post("post one", testAccount1);
+        testPost2 = new Post("post two", testAccount2);
+        testPost3 = new Post("post three", testAccount2);
         testPost1.setPostTime(1000000000000L);
         testPost2.setPostTime(2000000000000L);
         testPost3.setPostTime(3000000000000L);
         testAccount3.follow(testAccount1);
         testAccount3.follow(testAccount2);
-        testAccount1.makePost(testPost1);
-        testAccount1.makePost(testPost3);
-        testAccount2.makePost(testPost2);
         ArrayList<Post> testList1 = new ArrayList();
         testList1.add(testPost1);
         testList1.add(testPost2);
@@ -114,6 +112,20 @@ class AccountTest {
     }
     @Test
     public void testCaption() {
+        testPost1 = new Post("post one", testAccount1);
         assertEquals(testPost1.getCaption(), "post one");
     }
+
+    @Test
+    public void testPassword() {
+        testAccount1 = new Account("Joe", "pass");
+        assertEquals(testAccount1.getPassword(), "pass");
+    }
+
+    @Test
+    public void returnPostedBy() {
+        testPost1 = new Post("post", testAccount1);
+        assertEquals(testPost1.getPostedBy(), testAccount1);
+    }
+
 }

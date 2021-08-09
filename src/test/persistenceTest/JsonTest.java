@@ -32,11 +32,22 @@ public class JsonTest {
 
     public void checkAllAccounts(AllAccounts testAA) {
         assertEquals(testAA.getAllAccounts().size(), aa.getAllAccounts().size());
+        System.out.println("size");
         for (Account acc: testAA.getAllAccounts()) {
             Account equalAcc = aa.findByName(acc.getName());
             assertEquals(equalAcc.getFollowers().size(), acc.getFollowers().size());
+            System.out.println("followers");
             assertEquals(equalAcc.getFollowing().size(), acc.getFollowing().size());
+            System.out.println("following");
+            for (Post p : equalAcc.getPosts()) {
+                System.out.println(p.getCaption());
+            }
+            System.out.println("acc posts");
+            for (Post p : acc.getPosts()) {
+                System.out.println(p.getCaption());
+            }
             assertEquals(equalAcc.getPosts().size(), acc.getPosts().size());
+            System.out.println("posts");
         }
     }
 }

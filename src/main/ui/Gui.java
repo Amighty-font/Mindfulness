@@ -1,4 +1,4 @@
-package gui;
+package ui;
 
 import model.Account;
 import model.AllAccounts;
@@ -6,16 +6,19 @@ import model.Post;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MainGui implements ActionListener {
+public class Gui implements ActionListener {
 
     private int frameWidth = 1002;
     private int frameHeight = 1500;
@@ -26,8 +29,6 @@ public class MainGui implements ActionListener {
     JFrame frame;
     JButton search;
     JTextField searchBar;
-    JButton followers;
-    JButton following;
 
     //searchAction
     JLabel name;
@@ -66,6 +67,11 @@ public class MainGui implements ActionListener {
     JScrollPane scroll;
     JList feedList;
 
+    //PlaySound
+    Clip clip;
+    AudioInputStream inputStream;
+
+
     //Class Variables
     private Account user;
     private AllAccounts allAccounts = new AllAccounts();
@@ -76,7 +82,7 @@ public class MainGui implements ActionListener {
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
-    public MainGui() {
+    public Gui() {
         //Initializes the main empty app
         frame = new JFrame("Mindful App");
         mainPanel = new JPanel();
@@ -93,35 +99,25 @@ public class MainGui implements ActionListener {
 
     private void loginGui() {
         resetGui();
-        userName = new JLabel("Username");
-        userName.setFont(font);
+        loginFonts();
         userName.setBounds(230, 675, 240, 35);
         mainPanel.add(userName);
 
-        userText = new JTextField(20);
         userText.setBounds(470, 675, 300, 35);
-        userText.setFont(font);
         mainPanel.add(userText);
 
-        passLabel = new JLabel("Password");
-        passLabel.setFont(font);
         passLabel.setBounds(230, 735, 240, 35);
         mainPanel.add(passLabel);
 
-        passText = new JPasswordField(20);
-        passText.setFont(font);
         passText.setBounds(470, 735, 300, 35);
         mainPanel.add(passText);
 
-        loginButton = new JButton("Login");
         loginButton.setBounds(200, 795, 200, 35);
-        loginButton.setFont(font);
         loginButton.addActionListener(this);
         mainPanel.add(loginButton);
 
-        newUser = new JButton("New User");
+
         newUser.setBounds(600, 795, 200, 35);
-        newUser.setFont(font);
         newUser.addActionListener(this);
         mainPanel.add(newUser);
 
@@ -129,8 +125,24 @@ public class MainGui implements ActionListener {
         frame.setVisible(true);
     }
 
+    private void loginFonts() {
+        userName = new JLabel("Username");
+        userName.setFont(font);
+        userText = new JTextField(20);
+        userText.setFont(font);
+        passLabel = new JLabel("Password");
+        passLabel.setFont(font);
+        passText = new JPasswordField(20);
+        passText.setFont(font);
+        loginButton = new JButton("Login");
+        loginButton.setFont(font);
+        newUser = new JButton("New User");
+        newUser.setFont(font);
+
+    }
+
     public static void main(String[] args) {
-        new MainGui();
+        new Gui();
     }
 
     @Override
@@ -143,6 +155,7 @@ public class MainGui implements ActionListener {
             loginCheck(userInput, passInput);
         } else if (e.getSource() == followAction) {
             if (followAction.getText().equals("Follow")) {
+                followTone();
                 user.follow(interactingUser);
                 followAction.setText("Following");
             } else {
@@ -153,11 +166,17 @@ public class MainGui implements ActionListener {
         } else if (e.getSource() == quit) {
             saveAllAccounts();
             System.exit(0);
-        } else if (e.getSource() == logout) {
+        } else {
+            actionPerformedTwo(e);
+        }
+    }
+
+    private void actionPerformedTwo(ActionEvent e) {
+        if (e.getSource() == makePost) {
+            makePostGui();
+        }  else if (e.getSource() == logout) {
             frame.remove(scroll);
             loginGui();
-        } else if (e.getSource() == makePost) {
-            makePostGui();
         } else if (e.getSource() == home) {
             frame.remove(scroll);
             resetGui();
@@ -171,10 +190,18 @@ public class MainGui implements ActionListener {
             createFeed(user.getPosts(),0, 350, frameWidth, frameHeight - 550);
             bottomBar();
             showAccountSetAndAdd();
-        } else if (e.getSource() == createAccount) {
+        } else {
+            actionPerformedThree(e);
+        }
+    }
+
+    private void actionPerformedThree(ActionEvent e) {
+        if (e.getSource() == createAccount) {
             String userInput = userText.getText();
             String passInput = passText.getText();
-            setMainGui(new Account(userInput, passInput));
+            Account newAccount = new Account(userInput, passInput);
+            allAccounts.addAccount(newAccount);
+            setMainGui(newAccount);
         } else if (e.getSource() == newUser) {
             createAccount();
         } else if (e.getSource() == back) {
@@ -211,7 +238,7 @@ public class MainGui implements ActionListener {
         searchBar.setBounds(0, 0, frameWidth - 132, 100);
         searchBar.setFont(font);
 
-        search = new JButton();
+        search = new JButton("Search");
         search.setBounds(frameWidth - 132, 0, 100, 100);
         search.addActionListener(this::actionPerformed);
 
@@ -234,13 +261,11 @@ public class MainGui implements ActionListener {
 
     private void createAccount() {
         resetGui();
-        userName = new JLabel("Username");
-        userName.setFont(font);
+        createAccountFont();
+
         userName.setBounds(230, 675, 240, 35);
         mainPanel.add(userName);
 
-        passLabel = new JLabel("Password");
-        passLabel.setFont(font);
         passLabel.setBounds(230, 735, 240, 35);
         mainPanel.add(passLabel);
 
@@ -249,25 +274,32 @@ public class MainGui implements ActionListener {
         userText.setFont(font);
         mainPanel.add(userText);
 
-        createPass = new JTextField(20);
-        createPass.setFont(font);
         createPass.setBounds(470, 735, 300, 35);
         mainPanel.add(createPass);
 
-        createAccount = new JButton("Create Account");
         createAccount.setBounds(600, 795, 200, 35);
-        createAccount.setFont(font);
         createAccount.addActionListener(this);
         mainPanel.add(createAccount);
 
-        back = new JButton("Back");
         back.setBounds(200, 795, 200, 35);
-        back.setFont(font);
         back.addActionListener(this);
         mainPanel.add(back);
 
         mainPanel.setVisible(true);
         frame.setVisible(true);
+    }
+
+    private void createAccountFont() {
+        userName = new JLabel("Username");
+        userName.setFont(font);
+        passLabel = new JLabel("Password");
+        passLabel.setFont(font);
+        createPass = new JTextField(20);
+        createPass.setFont(font);
+        createAccount = new JButton("Create Account");
+        createAccount.setFont(font);
+        back = new JButton("Back");
+        back.setFont(font);
     }
 
     private void makePostGui() {
@@ -288,17 +320,7 @@ public class MainGui implements ActionListener {
     }
 
     private void bottomBar() {
-        quit = new JButton("Quit");
-        logout = new JButton("Logout");
-        makePost = new JButton("Post");
-        viewAccount = new JButton("Account");
-        home = new JButton("Home");
-
-        home.setFont(fontHeader);
-        logout.setFont(fontHeader);
-        quit.setFont(fontHeader);
-        viewAccount.setFont(fontHeader);
-        makePost.setFont(fontHeader);
+        bottomBarFont();
 
         quit.setBounds(0, frameHeight - 200, 194, 112);
         logout.setBounds(194, frameHeight - 200, 194, 112);
@@ -319,6 +341,20 @@ public class MainGui implements ActionListener {
         mainPanel.add(logout);
         mainPanel.add(makePost);
         mainPanel.add(viewAccount);
+    }
+
+    private void bottomBarFont() {
+        quit = new JButton("Quit");
+        logout = new JButton("Logout");
+        makePost = new JButton("Post");
+        viewAccount = new JButton("Account");
+        home = new JButton("Home");
+
+        home.setFont(fontHeader);
+        logout.setFont(fontHeader);
+        quit.setFont(fontHeader);
+        viewAccount.setFont(fontHeader);
+        makePost.setFont(fontHeader);
     }
 
     private void searchButtonPress() {
@@ -412,6 +448,17 @@ public class MainGui implements ActionListener {
         mainPanel.add(followingHeader);
         frame.add(mainPanel);
         frame.setVisible(true);
+    }
+
+    private void followTone() {
+        try {
+            clip = AudioSystem.getClip();
+            inputStream = AudioSystem.getAudioInputStream(new File("data/Follow Sound.wav"));
+            clip.open(inputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void saveAllAccounts() {

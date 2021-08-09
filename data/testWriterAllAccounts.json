@@ -1,26 +1,35 @@
 {"accounts": [
     {
+        "password": "pass",
         "followers": ["two"],
         "following": [],
         "name": "one",
         "posts": [
             {
+                "postedBy": "one",
                 "caption": "post one",
-                "time": 1627884065648
+                "time": 1628484760563
             },
             {
-                "caption": "post one",
-                "time": 1627884065648
+                "postedBy": "one",
+                "caption": "post two",
+                "time": 1628484760563
             }
         ]
     },
     {
+        "password": "pass",
         "followers": [],
         "following": ["one"],
         "name": "two",
-        "posts": []
+        "posts": [{
+            "postedBy": "two",
+            "caption": "post three",
+            "time": 1628484760563
+        }]
     },
     {
+        "password": "pass",
         "followers": [],
         "following": [],
         "name": "three",

@@ -68,9 +68,9 @@ public class JsonReader {
             Long postTime = jsonPost.getLong("time");
             String postCaption = jsonPost.getString("caption");
             Account posts = aa.findByName(jsonPost.getString("postedBy"));
-            int likes = jsonPost.getInt("likes");
+//            int likes = jsonPost.getInt("likes");
             Post post = new Post(postCaption, posts);
-            post.setLikes(likes);
+//            post.setLikes(likes);
             post.setPostTime(postTime);
             acc.makePost(post);
         }
