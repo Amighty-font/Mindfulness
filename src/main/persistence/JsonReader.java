@@ -72,7 +72,7 @@ public class JsonReader {
             Post post = new Post(postCaption, posts);
 //            post.setLikes(likes);
             post.setPostTime(postTime);
-            acc.makePost(post);
+//            acc.makePost(post);
         }
     }
 

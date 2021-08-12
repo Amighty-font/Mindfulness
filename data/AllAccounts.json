@@ -1,11 +1,24 @@
-{"accounts": [{
-    "password": "pass",
-    "followers": [],
-    "following": [],
-    "name": "Joe",
-    "posts": [{
-        "postedBy": "Joe",
-        "caption": "Hello there!",
-        "time": 1628483774788
-    }]
-}]}
+{"accounts": [
+    {
+        "password": "thisismypassword",
+        "followers": ["Bob"],
+        "following": [],
+        "name": "Joe",
+        "posts": [{
+            "postedBy": "Joe",
+            "caption": "Hi there! I am Joe.",
+            "time": 1628628298293
+        }]
+    },
+    {
+        "password": "password",
+        "followers": [],
+        "following": ["Joe"],
+        "name": "Bob",
+        "posts": [{
+            "postedBy": "Bob",
+            "caption": "Hello there",
+            "time": 1628630383240
+        }]
+    }
+]}

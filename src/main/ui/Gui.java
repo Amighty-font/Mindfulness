@@ -198,7 +198,8 @@ public class Gui implements ActionListener {
     private void actionPerformedThree(ActionEvent e) {
         if (e.getSource() == createAccount) {
             String userInput = userText.getText();
-            String passInput = passText.getText();
+            String passInput = createPass.getText();
+            System.out.println(createPass);
             Account newAccount = new Account(userInput, passInput);
             allAccounts.addAccount(newAccount);
             setMainGui(newAccount);
@@ -213,10 +214,8 @@ public class Gui implements ActionListener {
     //EFFECTS: Check if login and password are correct
     private void loginCheck(String user, String pass) {
         Account foundUser = allAccounts.findByName(user);
-        if (!(foundUser == null)) {
-            if (pass.equals(foundUser.getPassword())) {
-                setMainGui(foundUser);
-            }
+        if (!(foundUser == null) && pass.equals(foundUser.getPassword())) {
+            setMainGui(foundUser);
         } else {
             JLabel incorrectID = new JLabel("Incorrect username and/or password!");
             incorrectID.setBounds(300, 850, 500, 35);

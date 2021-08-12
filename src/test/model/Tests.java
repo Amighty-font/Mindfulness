@@ -127,5 +127,4 @@ class AccountTest {
         testPost1 = new Post("post", testAccount1);
         assertEquals(testPost1.getPostedBy(), testAccount1);
     }
-
 }

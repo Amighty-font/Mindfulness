@@ -15,8 +15,6 @@ public class Post implements Writable {
         postTime = System.currentTimeMillis();
         caption = post;
         postedBy = account;
-//        likes = 0;
-
         account.makePost(this);
     }
 

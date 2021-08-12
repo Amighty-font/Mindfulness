@@ -38,3 +38,12 @@ of time to check this app as one would check their email rather than scrolling e
 - As a user, I want to view my feed
 - As a user, I want to all accounts to be saved
 - As a user, I want to load all accounts
+
+##Phase 4: Task 2
+
+- Bi-directional relationship between Post and Account
+
+##Phase 4: Task 3
+- designate classes better. My GUI class is extremely large, and I could maybe split login, main and account GUI
+into diff classes. These classes could extend a larger GUI class that sets the standard frame, and my ultimate GUI
+  class would just call these diff classes when necessary.
